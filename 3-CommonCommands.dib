@@ -1,0 +1,168 @@
+#!markdown
+
+# Common Commands
+<hr />
+
+#!markdown
+
+### Get-Help
+
+**Alias:** help 
+
+*note: using the `help` alias will paginate the help page*
+
+**Description:** Displays information about PowerShell commands and concepts.
+
+#!pwsh
+
+Get-Help Get-Command
+
+#!markdown
+
+### Get-Command
+
+**Alias:** gcm
+
+**Description:** Used to get information on commands. Can be used on its own or by limiting search to Noun and/or Verb `Get-Command -Noun *file*`, `Get-Command -Verb *delete*`
+
+#!pwsh
+
+Get-Command -Name Start-Process
+
+#!pwsh
+
+Get-Command -Noun Process
+
+#!pwsh
+
+Get-Command -Verb ConvertTo
+
+#!pwsh
+
+Get-Command -Verb Convert* -TotalCount 5
+
+#!markdown
+
+### Get-Member
+
+**Alias:** gm
+
+**Description:** Gets the properties and methods of objects.
+
+#!pwsh
+
+$notepadProcess = Start-Process notepad -PassThru
+Get-Member -InputObject $notepadProcess
+
+#!markdown
+
+### Measure-Object
+
+**Alias:** measure
+
+**Description:** Calculates the numeric properties of objects, and the characters, words, and lines in string objects, such as files of text.
+
+#!pwsh
+
+Get-Command | Measure-Object
+
+#!pwsh
+
+1..10 | Measure-Object -AllStats
+
+#!markdown
+
+### Foreach-Object
+
+**Alias:** % or foreach
+
+**Description:** Performs an operation against each item in a collection of input objects.
+
+#!pwsh
+
+1..5 | ForEach-Object { $_ }
+
+#!markdown
+
+### Where-Object
+
+**Alias:** ? or where
+
+**Description:** Selects objects from a collection based on their property values.
+
+#!pwsh
+
+1..5 | Where-Object { $_ -gt 3 }
+
+#!markdown
+
+### Select-Object
+
+**Alias:** select
+
+**Description:** Selects objects or object properties.
+
+#!pwsh
+
+1..5 | Select-Object -First 3
+
+#!pwsh
+
+1..5 | Select-Object -Skip 2 -First 2
+
+#!pwsh
+
+Get-Process | Select-Object -ExpandProperty Name -First 3
+
+#!markdown
+
+### Invoke-RestMethod
+
+**Alias:** irm
+
+**Description:** Sends an HTTP or HTTPS request to a RESTful web service.
+
+#!pwsh
+
+Invoke-RestMethod -Method 'Get' -Uri "https://jsonplaceholder.typicode.com/todos/1"
+
+#!pwsh
+
+$todos = Invoke-RestMethod -Method 'Get' -Uri "https://jsonplaceholder.typicode.com/todos"
+$todos | Measure-Object
+
+#!markdown
+
+### Get-History
+
+**Alias:** history or h or ghy
+
+**Description:** Gets a list of the commands entered during the current session.
+
+#!pwsh
+
+Get-History
+
+#!pwsh
+
+Get-History -Count 5
+
+#!pwsh
+
+Get-History -Count 5 | Select-Object -ExpandProperty CommandLine
+
+#!pwsh
+
+Get-History -Count 5 | Select-Object -ExpandProperty CommandLine > commands.ps1
+
+#!markdown
+
+### ConvertTo-Json
+
+**Alias:** n/a
+
+**Description:** Converts an object to a JSON-formatted string.
+
+#!pwsh
+
+Get-History | Select-Object -First 2 | ForEach-Object { [pscustomobject]@{ id = $_.Id; commandLine = $_.CommandLine } } | ConvertTo-Json

@@ -1,0 +1,181 @@
+#!markdown
+
+# What is PowerShell?
+<hr />
+
+#!markdown
+
+PowerShell is a scripting language that can be used to automate all kinds of things!
+
+- File system stuff
+- Interactions with APIs
+- Tedious workflows
+
+*I can run powershell in this file, called a [notebook](https://andrewlock.net/exploring-dotnet-interactive-notebooks/)*
+
+#!pwsh
+
+Write-Host 'Hello World'
+
+#!markdown
+
+<div style="margin-top: 400px;"></div>
+
+#!markdown
+
+### PowerShell follows a `verb-noun` format ([link](https://docs.microsoft.com/en-us/powershell/scripting/developer/cmdlet/approved-verbs-for-windows-powershell-commands?view=powershell-7.2)).
+
+![Verb Noun](./images/VerbNoun.png)
+
+#!pwsh
+
+Get-Command -TotalCount 10
+
+#!markdown
+
+Typically you'll write and run PowerShell in an interactive shell or text editor 
+
+#!markdown
+
+![Interactive Shell](./images/InteractiveShell.png)
+
+#!markdown
+
+### Variables
+
+#!markdown
+
+Variables syntax is $variableName
+
+#!pwsh
+
+$greeting = "Hello World"
+Write-Host $greeting
+
+#!markdown
+
+You can assign tons of stuff to variables!
+
+#!pwsh
+
+$commands = Get-Command
+$commands.Count
+
+#!pwsh
+
+Start-Process notepad
+
+#!pwsh
+
+$notepadProcess = Start-Process notepad -PassThru
+
+# display info about this process object
+$notepadProcess
+
+# just so we can see the notepad window
+Start-Sleep -Seconds 2
+
+Stop-Process $notePadProcess
+
+#!markdown
+
+### Operators
+
+#!markdown
+
+**Comparison Operators**
+
+#!pwsh
+
+# equal to
+1 -eq 1
+1 -eq 2
+
+# not equal to
+1 -ne 2
+
+# greater than
+5 -gt 1
+
+# greater than or equal to
+5 -ge 5
+
+# less than
+5 -lt 10
+
+# less than or equal to
+5 -le 5
+
+#!pwsh
+
+# match using the wildcard character (*)
+"MyString" -like "*String"
+
+# does not match using the wildcard character
+"MyString" -notlike "Other*"
+
+# matches a string using regular expressions
+"MyString" -match "$String^"
+
+# does not match a string using regular expressions
+"MyString" -notmatch "Other^"
+
+# Changes the specified elements of a value
+"Get-Process" -replace "Get", "Stop"
+
+#!pwsh
+
+# returns true when the value (right) is present in the array (left)
+"abc", "def" -contains "def"
+
+# returns true when the value (right) is *not* present in the array (left)
+"abc", "def" -notcontains "123"
+
+# returns true when the value (left) is present in the array (right)
+"def" -in "abc", "def"
+
+# returns true when the value (left) is *not* present in the array (right)
+"123" -notin "abc", "def"
+
+#!pwsh
+
+$true -and $true
+$true -or $false
+-not $false
+!$false
+
+#!pwsh
+
+# send success output to file (overwrite)
+# cmdlet > file
+Write-Output "You won't see this" > file.txt
+Write-Output "Hello World" > file.txt
+
+# send success output to file (append)
+Write-Output "Added to the end" >> file.txt
+
+# so many more redirection operators!
+
+#!markdown
+
+### Pipelines
+
+#!markdown
+
+You can "pipe" the output of one command or variable as input into another command! 🤯
+
+#!pwsh
+
+Get-Command | Measure-Object
+
+#!pwsh
+
+1..5 | ForEach-Object { Write-Host $_ }
+
+#!pwsh
+
+1..5 | ForEach-Object { $_ * 2 } | Where-Object { $_ -gt 5 }
+
+#!markdown
+
+### Objects
