@@ -11,6 +11,12 @@ PowerShell is a scripting language that can be used to automate all kinds of thi
 - Interactions with APIs
 - Tedious workflows
 
+#!markdown
+
+<div style="margin-top: 600px;"></div>
+
+#!markdown
+
 *I can run powershell in this file, called a [notebook](https://andrewlock.net/exploring-dotnet-interactive-notebooks/)*
 
 #!pwsh
@@ -19,7 +25,7 @@ Write-Host 'Hello World'
 
 #!markdown
 
-<div style="margin-top: 400px;"></div>
+<div style="margin-top: 600px;"></div>
 
 #!markdown
 
@@ -67,7 +73,7 @@ Start-Process notepad
 
 #!pwsh
 
-$notepadProcess = Start-Process notepad -PassThru
+$notepadProcess = Start-Process notepad -PassThru   # PassThru parameter makes Start-Process return a process object that we can work with
 
 # display info about this process object
 $notepadProcess
@@ -137,12 +143,20 @@ Stop-Process $notePadProcess
 # returns true when the value (left) is *not* present in the array (right)
 "123" -notin "abc", "def"
 
+#!markdown
+
+**Logical Operators**
+
 #!pwsh
 
 $true -and $true
 $true -or $false
 -not $false
 !$false
+
+#!markdown
+
+**Redirection Operators**
 
 #!pwsh
 
@@ -179,3 +193,50 @@ Get-Command | Measure-Object
 #!markdown
 
 ### Objects
+
+#!pwsh
+
+# Hashtable
+$hashTable = @{ a = 1; b = 2 }
+$hashTable
+
+#!pwsh
+
+# PSObject
+$psObject = [psobject]@{ a = 1; b = 2 }
+$psObject
+
+#!pwsh
+
+# PSCustomObject
+$psCustomObject = [pscustomobject]@{ a = 1; b = 2 }
+$psCustomObject
+
+#!markdown
+
+PowerShell works with .NET types!
+
+#!pwsh
+
+# Instance Members
+
+# methods: $objectReference.MethodName(parameter list)
+$greeting = "Hello there!"
+$greeting.ToUpper()
+$greeting.EndsWith("!")
+$greeting.Split(" ")
+
+# properties: $objectReference.PropertyName
+$greeting.Length
+$greeting[0]
+
+#!pwsh
+
+# Static Members
+
+# methods: [ClassName]::MethodName(parameter list)
+[Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":some api token")) # Thanks Jeremy for this one! 👍
+
+# properties: [ClassName]::PropertyName
+[System.DateTime]::Now
+[Math]::PI

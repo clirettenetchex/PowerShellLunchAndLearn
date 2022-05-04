@@ -166,3 +166,20 @@ Get-History -Count 5 | Select-Object -ExpandProperty CommandLine > commands.ps1
 #!pwsh
 
 Get-History | Select-Object -First 2 | ForEach-Object { [pscustomobject]@{ id = $_.Id; commandLine = $_.CommandLine } } | ConvertTo-Json
+
+#!markdown
+
+### Format-List
+
+**Alias:** fl
+
+**Description:** Formats the output as a list of properties in which each property appears on a new line.
+
+#!pwsh
+
+# default is to output to a table
+Get-History | Select-Object -First 2
+
+#!pwsh
+
+Get-History | Select-Object -First 2 | Format-List
