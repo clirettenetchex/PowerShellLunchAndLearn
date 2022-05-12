@@ -19,7 +19,7 @@ Set-Location C:\Working\$apiName
 
 $sourceBranch = git branch --show-current
 
-$token = "57oo4mvqr2tpw7b5w3loeckwfu4o6nw3sihfcvvlwoxgqimlddza"
+$token = "this is a token"
 $headers = @{
     Authorization = "Basic {0}" -f [Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$token"))
 }
